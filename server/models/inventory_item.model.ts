@@ -17,7 +17,7 @@ import {
 import { User } from "./user.model";
 
 @Table({ tableName: "inventory_items" })
-export class InventoryItems extends Model {
+export class InventoryItem extends Model {
 	@AllowNull(false)
 	@AutoIncrement
 	@Column({ primaryKey: true, type: DataType.INTEGER })
