@@ -1,7 +1,7 @@
 export {}
 const {
     handleCreateUser,
-    // handleLoginUser,
+    handleLoginUser,
     // handleGetCurrentUser,
     // handleLogoutUser
     
@@ -13,7 +13,7 @@ const express = require("express");
 const router = express.Router();
 
 router.post("/register", handleCreateUser)
-// router.post("/login", handleLoginUser)
+router.post("/login", handleLoginUser)
 // router.get("/", handleGetCurrentUser);
 // router.get("/logout", handleLogoutUser);
 

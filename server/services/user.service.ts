@@ -24,8 +24,13 @@ const loginUser = async (data: any, res: any) => {
 		throw {
             name: "IncorrectPasswordError",
             message: "Invalid credentials"
-        };  
+        }; 
+        console.log("wrong credentials");
+         
 	}
+
+    console.log("logged in");
+    
 };
 
 module.exports = {
