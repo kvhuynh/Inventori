@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CssVarsProvider, useColorScheme } from "@mui/joy/styles";
 import GlobalStyles from "@mui/joy/GlobalStyles";
 import CssBaseline from "@mui/joy/CssBaseline";
@@ -20,26 +20,28 @@ import BadgeRoundedIcon from "@mui/icons-material/BadgeRounded";
 
 import ReactCardFlip from "react-card-flip";
 
-// import GoogleIcon from './GoogleIcon';
-
-interface FormElements extends HTMLFormControlsCollection {
-	email: HTMLInputElement;
-	password: HTMLInputElement;
-	confirmPassword?: HTMLInputElement;
-	persistent?: HTMLInputElement;
+interface FormElements {
+	email: string;
+	password: string;
+	confirmPassword?: string;
+	persistent: boolean;
 }
 
-interface SignInFormElement extends HTMLFormElement {
-	// readonly elements: FormElements;
-	readonly elements: FormElements;
-}
+const userState: FormElements = {
+	email: "",
+	password: "",
+	confirmPassword: "",
+	persistent: false,
+};
 
 function ColorSchemeToggle(props: IconButtonProps) {
 	const { onClick, ...other } = props;
 	const { mode, setMode } = useColorScheme();
-	const [mounted, setMounted] = React.useState(false);
+	const [mounted, setMounted] = useState(false);
 
-	React.useEffect(() => setMounted(true), []);
+	useEffect(() => {
+		setMounted(true);
+	}, []);
 
 	return (
 		<IconButton
@@ -60,10 +62,22 @@ function ColorSchemeToggle(props: IconButtonProps) {
 
 export const LoginRegister: React.FC = () => {
 	const [isFlipped, setIsFlipped] = useState<boolean>(false);
+	const [userInfo, setUserInfo] = useState<FormElements>(userState);
 
 	const handleFlip = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
 		e.preventDefault();
 		setIsFlipped(!isFlipped);
+	};
+
+	const handleChange =
+		(props: keyof FormElements) =>
+		(event: React.ChangeEvent<HTMLInputElement>) => {
+			setUserInfo({ ...userInfo, [props]: event.target.value });
+		};
+
+	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+		console.log(userInfo);
 	};
 
 	return (
@@ -119,7 +133,7 @@ export const LoginRegister: React.FC = () => {
 						<ColorSchemeToggle />
 					</Box>
 					<ReactCardFlip isFlipped={isFlipped}>
-						<Box sx={{ bgcolor: "primary.700", borderRadius: 20 }}>
+						<Box sx={{ bgcolor: "primary", borderRadius: 20 }}>
 							<Box
 								component="main"
 								sx={{
@@ -149,9 +163,8 @@ export const LoginRegister: React.FC = () => {
 											Sign in
 										</Typography>
 										<Typography level="body-sm">
-											New to company?{" "}
+											New to us?{" "}
 											<Link
-												href="#replace-with-a-link"
 												level="title-sm"
 												onClick={(
 													event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
@@ -163,12 +176,7 @@ export const LoginRegister: React.FC = () => {
 											</Link>
 										</Typography>
 									</Stack>
-									<Button
-										variant="soft"
-										color="neutral"
-										fullWidth
-										// startDecorator={<GoogleIcon />}
-									>
+									<Button variant="soft" color="neutral" fullWidth>
 										Continue with Google
 									</Button>
 								</Stack>
@@ -182,25 +190,14 @@ export const LoginRegister: React.FC = () => {
 									or
 								</Divider>
 								<Stack gap={4} sx={{ mt: 2 }}>
-									<form
-										onSubmit={(event: React.FormEvent<SignInFormElement>) => {
-											event.preventDefault();
-											const formElements = event.currentTarget.elements;
-											const data = {
-												email: formElements.email.value,
-												password: formElements.password.value,
-												persistent: formElements.persistent?.checked,
-											};
-											alert(JSON.stringify(data, null, 2));
-										}}
-									>
+									<form onSubmit={handleSubmit}>
 										<FormControl required>
 											<FormLabel>Email:</FormLabel>
-											<Input type="email" name="email" />
+											<Input onChange={handleChange("email")} type="email" name="email" />
 										</FormControl>
 										<FormControl required>
 											<FormLabel>Password:</FormLabel>
-											<Input type="password" name="password" />
+											<Input onChange={handleChange("password")} type="password" name="password" />
 										</FormControl>
 										<Stack gap={4} sx={{ mt: 2 }}>
 											<Box
@@ -227,7 +224,7 @@ export const LoginRegister: React.FC = () => {
 								</Stack>
 							</Box>
 						</Box>
-						<Box sx={{ bgcolor: "primary.700", borderRadius: 20 }}>
+						<Box sx={{ bgcolor: "primary", borderRadius: 20 }}>
 							<Box
 								component="main"
 								sx={{
@@ -259,7 +256,6 @@ export const LoginRegister: React.FC = () => {
 										<Typography level="body-sm">
 											Already a member?{" "}
 											<Link
-												href="#replace-with-a-link"
 												level="title-sm"
 												onClick={(
 													event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
@@ -271,12 +267,7 @@ export const LoginRegister: React.FC = () => {
 											</Link>
 										</Typography>
 									</Stack>
-									<Button
-										variant="soft"
-										color="neutral"
-										fullWidth
-										// startDecorator={<GoogleIcon />}
-									>
+									<Button variant="soft" color="neutral" fullWidth>
 										Continue with Google
 									</Button>
 								</Stack>
@@ -290,29 +281,18 @@ export const LoginRegister: React.FC = () => {
 									or
 								</Divider>
 								<Stack gap={4} sx={{ mt: 2 }}>
-									<form
-										onSubmit={(event: React.FormEvent<SignInFormElement>) => {
-											event.preventDefault();
-											const formElements = event.currentTarget.elements;
-											const data = {
-												email: formElements.email.value,
-												password: formElements.password.value,
-												confirmPassword: formElements.confirmPassword?.value,
-											};
-											alert(JSON.stringify(data, null, 2));
-										}}
-									>
+									<form onSubmit={handleSubmit}>
 										<FormControl required>
 											<FormLabel>Email:</FormLabel>
-											<Input type="email" name="email" />
+											<Input onChange={handleChange("email")} type="email" name="email" />
 										</FormControl>
 										<FormControl required>
 											<FormLabel>Password:</FormLabel>
-											<Input type="password" name="password" />
+											<Input onChange={handleChange("password")} type="password" name="password" />
 										</FormControl>
 										<FormControl required>
 											<FormLabel>Confirm Password:</FormLabel>
-											<Input type="password" name="confirmPassword" />
+											<Input onChange={handleChange("confirmPassword")} type="password" name="confirmPassword" />
 										</FormControl>
 										<Stack gap={4} sx={{ mt: 2 }}>
 											<Box
@@ -321,18 +301,9 @@ export const LoginRegister: React.FC = () => {
 													justifyContent: "space-between",
 													alignItems: "center",
 												}}
-											>
-												<Checkbox
-													size="sm"
-													label="Remember me"
-													name="persistent"
-												/>
-												<Link level="title-sm" href="#replace-with-a-link">
-													Forgot your password?
-												</Link>
-											</Box>
+											></Box>
 											<Button type="submit" fullWidth>
-												Sign in
+												Sign up
 											</Button>
 										</Stack>
 									</form>
