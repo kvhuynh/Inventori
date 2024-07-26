@@ -1,19 +1,14 @@
 import * as React from "react";
+import Login from "./Login";
+import Register from "./Register";
+
 import { useState, useEffect } from "react";
 import { CssVarsProvider, useColorScheme } from "@mui/joy/styles";
 import GlobalStyles from "@mui/joy/GlobalStyles";
 import CssBaseline from "@mui/joy/CssBaseline";
 import Box from "@mui/joy/Box";
-import Button from "@mui/joy/Button";
-import Checkbox from "@mui/joy/Checkbox";
-import Divider from "@mui/joy/Divider";
-import FormControl from "@mui/joy/FormControl";
-import FormLabel from "@mui/joy/FormLabel";
 import IconButton, { IconButtonProps } from "@mui/joy/IconButton";
-import Link from "@mui/joy/Link";
-import Input from "@mui/joy/Input";
 import Typography from "@mui/joy/Typography";
-import Stack from "@mui/joy/Stack";
 import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded";
 import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
 import BadgeRoundedIcon from "@mui/icons-material/BadgeRounded";
@@ -67,18 +62,7 @@ export const LoginRegister: React.FC = () => {
 	const handleFlip = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
 		e.preventDefault();
 		setIsFlipped(!isFlipped);
-	};
-
-	const handleChange =
-		(props: keyof FormElements) =>
-		(event: React.ChangeEvent<HTMLInputElement>) => {
-			setUserInfo({ ...userInfo, [props]: event.target.value });
-		};
-
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-		console.log(userInfo);
-	};
+	};	
 
 	return (
 		<CssVarsProvider defaultMode="dark" disableTransitionOnChange>
@@ -132,184 +116,10 @@ export const LoginRegister: React.FC = () => {
 						</Box>
 						<ColorSchemeToggle />
 					</Box>
+
 					<ReactCardFlip isFlipped={isFlipped}>
-						<Box sx={{ bgcolor: "primary", borderRadius: 20 }}>
-							<Box
-								component="main"
-								sx={{
-									my: "auto",
-									py: 2,
-									pb: 5,
-									display: "flex",
-									flexDirection: "column",
-									gap: 2,
-									width: 400,
-									maxWidth: "100%",
-									mx: "auto",
-									borderRadius: "sm",
-									"& form": {
-										display: "flex",
-										flexDirection: "column",
-										gap: 2,
-									},
-									[`& .MuiFormLabel-asterisk`]: {
-										visibility: "hidden",
-									},
-								}}
-							>
-								<Stack gap={4} sx={{ mb: 2 }}>
-									<Stack gap={1}>
-										<Typography component="h1" level="h3">
-											Sign in
-										</Typography>
-										<Typography level="body-sm">
-											New to us?{" "}
-											<Link
-												level="title-sm"
-												onClick={(
-													event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
-												) => {
-													handleFlip(event);
-												}}
-											>
-												Sign up!
-											</Link>
-										</Typography>
-									</Stack>
-									<Button variant="soft" color="neutral" fullWidth>
-										Continue with Google
-									</Button>
-								</Stack>
-								<Divider
-									sx={(theme) => ({
-										[theme.getColorSchemeSelector("light")]: {
-											color: { xs: "#FFF", md: "text.tertiary" },
-										},
-									})}
-								>
-									or
-								</Divider>
-								<Stack gap={4} sx={{ mt: 2 }}>
-									<form onSubmit={handleSubmit}>
-										<FormControl required>
-											<FormLabel>Email:</FormLabel>
-											<Input onChange={handleChange("email")} type="email" name="email" />
-										</FormControl>
-										<FormControl required>
-											<FormLabel>Password:</FormLabel>
-											<Input onChange={handleChange("password")} type="password" name="password" />
-										</FormControl>
-										<Stack gap={4} sx={{ mt: 2 }}>
-											<Box
-												sx={{
-													display: "flex",
-													justifyContent: "space-between",
-													alignItems: "center",
-												}}
-											>
-												<Checkbox
-													size="sm"
-													label="Remember me"
-													name="persistent"
-												/>
-												<Link level="title-sm" href="#replace-with-a-link">
-													Forgot your password?
-												</Link>
-											</Box>
-											<Button type="submit" fullWidth>
-												Sign in
-											</Button>
-										</Stack>
-									</form>
-								</Stack>
-							</Box>
-						</Box>
-						<Box sx={{ bgcolor: "primary", borderRadius: 20 }}>
-							<Box
-								component="main"
-								sx={{
-									my: "auto",
-									py: 2,
-									pb: 5,
-									display: "flex",
-									flexDirection: "column",
-									gap: 2,
-									width: 400,
-									maxWidth: "100%",
-									mx: "auto",
-									borderRadius: "sm",
-									"& form": {
-										display: "flex",
-										flexDirection: "column",
-										gap: 2,
-									},
-									[`& .MuiFormLabel-asterisk`]: {
-										visibility: "hidden",
-									},
-								}}
-							>
-								<Stack gap={4} sx={{ mb: 2 }}>
-									<Stack gap={1}>
-										<Typography component="h1" level="h3">
-											Register
-										</Typography>
-										<Typography level="body-sm">
-											Already a member?{" "}
-											<Link
-												level="title-sm"
-												onClick={(
-													event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
-												) => {
-													handleFlip(event);
-												}}
-											>
-												Sign in!
-											</Link>
-										</Typography>
-									</Stack>
-									<Button variant="soft" color="neutral" fullWidth>
-										Continue with Google
-									</Button>
-								</Stack>
-								<Divider
-									sx={(theme) => ({
-										[theme.getColorSchemeSelector("light")]: {
-											color: { xs: "#FFF", md: "text.tertiary" },
-										},
-									})}
-								>
-									or
-								</Divider>
-								<Stack gap={4} sx={{ mt: 2 }}>
-									<form onSubmit={handleSubmit}>
-										<FormControl required>
-											<FormLabel>Email:</FormLabel>
-											<Input onChange={handleChange("email")} type="email" name="email" />
-										</FormControl>
-										<FormControl required>
-											<FormLabel>Password:</FormLabel>
-											<Input onChange={handleChange("password")} type="password" name="password" />
-										</FormControl>
-										<FormControl required>
-											<FormLabel>Confirm Password:</FormLabel>
-											<Input onChange={handleChange("confirmPassword")} type="password" name="confirmPassword" />
-										</FormControl>
-										<Stack gap={4} sx={{ mt: 2 }}>
-											<Box
-												sx={{
-													display: "flex",
-													justifyContent: "space-between",
-													alignItems: "center",
-												}}
-											></Box>
-											<Button type="submit" fullWidth>
-												Sign up
-											</Button>
-										</Stack>
-									</form>
-								</Stack>
-							</Box>
-						</Box>
+						<Login flipState={handleFlip}></Login>
+						<Register flipState={handleFlip}></Register>
 					</ReactCardFlip>
 
 					<Box component="footer" sx={{ py: 3 }}>
