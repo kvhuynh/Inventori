@@ -1,7 +1,6 @@
 import {
 	Box,
 	Button,
-	Checkbox,
 	Divider,
 	FormControl,
 	FormLabel,
@@ -11,37 +10,18 @@ import {
 	Typography,
 } from "@mui/joy";
 import { useState } from "react";
-import { ReactCardFlip } from "react-card-flip";
 
-interface FormElements {
-	email: string;
-	password: string;
-	confirmPassword?: string;
-	persistent: boolean;
-}
+import { FormElements } from "./loginRegisterTypes";
+import { Props } from "./loginRegisterTypes";
+import { userState } from "./loginRegisterTypes";
 
-const userState: FormElements = {
-	email: "",
-	password: "",
-	confirmPassword: "",
-	persistent: false,
-};
-
-interface Props {
-    flipState: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
-}
-
-export const Login: React.FC<Props> = (props) => {
+export const Register: React.FC<Props> = (props) => {
 	const [userInfo, setUserInfo] = useState<FormElements>(userState);
-	// const [isFlipped, setIsFlipped] = useState(props.flipState);
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		console.log(userInfo);
 	};
-
-    // console.log(props.flipState);
-    
 
 	const handleChange =
 		(props: keyof FormElements) =>
@@ -76,17 +56,17 @@ export const Login: React.FC<Props> = (props) => {
 				<Stack gap={4} sx={{ mb: 2 }}>
 					<Stack gap={1}>
 						<Typography component="h1" level="h3">
-							Sign in
+							Register
 						</Typography>
 						<Typography level="body-sm">
-							New to us?{" "}
+							Already a member?{" "}
 							<Link
 								level="title-sm"
 								onClick={(e) => {
-									props.flipState(e)
+									props.flipState(e);
 								}}
 							>
-								Sign up!
+								Sign in!
 							</Link>
 						</Typography>
 					</Stack>
@@ -121,6 +101,14 @@ export const Login: React.FC<Props> = (props) => {
 								name="password"
 							/>
 						</FormControl>
+						<FormControl required>
+							<FormLabel>Confirm Password:</FormLabel>
+							<Input
+								onChange={handleChange("confirmPassword")}
+								type="password"
+								name="confirmPassword"
+							/>
+						</FormControl>
 						<Stack gap={4} sx={{ mt: 2 }}>
 							<Box
 								sx={{
@@ -128,14 +116,9 @@ export const Login: React.FC<Props> = (props) => {
 									justifyContent: "space-between",
 									alignItems: "center",
 								}}
-							>
-								<Checkbox size="sm" label="Remember me" name="persistent" />
-								<Link level="title-sm" href="#replace-with-a-link">
-									Forgot your password?
-								</Link>
-							</Box>
+							></Box>
 							<Button type="submit" fullWidth>
-								Sign in
+								Sign up
 							</Button>
 						</Stack>
 					</form>
@@ -145,4 +128,4 @@ export const Login: React.FC<Props> = (props) => {
 	);
 };
 
-export default Login;
+export default Register;

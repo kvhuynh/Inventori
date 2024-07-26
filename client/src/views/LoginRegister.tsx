@@ -1,6 +1,6 @@
 import * as React from "react";
-import Login from "./Login";
-import Register from "./Register";
+import Login from "../components/login-register/Login";
+import Register from "../components/login-register/Register";
 
 import { useState, useEffect } from "react";
 import { CssVarsProvider, useColorScheme } from "@mui/joy/styles";
@@ -14,20 +14,6 @@ import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
 import BadgeRoundedIcon from "@mui/icons-material/BadgeRounded";
 
 import ReactCardFlip from "react-card-flip";
-
-interface FormElements {
-	email: string;
-	password: string;
-	confirmPassword?: string;
-	persistent: boolean;
-}
-
-const userState: FormElements = {
-	email: "",
-	password: "",
-	confirmPassword: "",
-	persistent: false,
-};
 
 function ColorSchemeToggle(props: IconButtonProps) {
 	const { onClick, ...other } = props;
@@ -57,7 +43,7 @@ function ColorSchemeToggle(props: IconButtonProps) {
 
 export const LoginRegister: React.FC = () => {
 	const [isFlipped, setIsFlipped] = useState<boolean>(false);
-	const [userInfo, setUserInfo] = useState<FormElements>(userState);
+	// const [userInfo, setUserInfo] = useState<FormElements>(userState);
 
 	const handleFlip = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
 		e.preventDefault();

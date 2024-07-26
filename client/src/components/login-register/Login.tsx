@@ -12,30 +12,19 @@ import {
 } from "@mui/joy";
 import { useState } from "react";
 
-interface FormElements {
-	email: string;
-	password: string;
-	confirmPassword?: string;
-	persistent: boolean;
-}
+import { FormElements } from "./loginRegisterTypes";
+import { Props } from "./loginRegisterTypes";
+import { userState } from "./loginRegisterTypes";
 
-const userState: FormElements = {
-	email: "",
-	password: "",
-	confirmPassword: "",
-	persistent: false,
-};
+import { createUser } from "../../services/loginRegister.service";
 
-interface Props {
-    flipState: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
-}
-
-export const Register: React.FC<Props> = (props) => {
+export const Login: React.FC<Props> = (props) => {
 	const [userInfo, setUserInfo] = useState<FormElements>(userState);
 	// const [isFlipped, setIsFlipped] = useState(props.flipState);
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
+		createUser(userInfo).then
 		console.log(userInfo);
 	};
 
@@ -72,14 +61,14 @@ export const Register: React.FC<Props> = (props) => {
 				<Stack gap={4} sx={{ mb: 2 }}>
 					<Stack gap={1}>
 						<Typography component="h1" level="h3">
-							Register
+							Sign in
 						</Typography>
 						<Typography level="body-sm">
-							Already a member?{" "}
+							New to us?{" "}
 							<Link
 								level="title-sm"
 								onClick={(e) => {
-									props.flipState(e)
+									props.flipState(e);
 								}}
 							>
 								Sign up!
@@ -141,4 +130,4 @@ export const Register: React.FC<Props> = (props) => {
 	);
 };
 
-export default Register;
+export default Login;
