@@ -11,6 +11,7 @@ import {
 	Typography,
 } from "@mui/joy";
 import { useState } from "react";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 
 import { FormElements } from "./loginRegisterTypes";
 import { Props } from "./loginRegisterTypes";
@@ -20,11 +21,18 @@ import { createUser } from "../../services/loginRegister.service";
 
 export const Login: React.FC<Props> = (props) => {
 	const [userInfo, setUserInfo] = useState<FormElements>(userState);
-	// const [isFlipped, setIsFlipped] = useState(props.flipState);
+	const [error, setError] = useState<string>("");
+	const navigate: NavigateFunction = useNavigate();
 
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		createUser(userInfo).then
+		createUser(userInfo).then(() => {
+			navigate("/dashboard");
+		}).catch((error: string) => {
+			setError("Invalid Credentials");
+		})
+		
+		;
 		console.log(userInfo);
 	};
 

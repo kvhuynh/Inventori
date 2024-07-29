@@ -10,17 +10,58 @@ import {
 	Typography,
 } from "@mui/joy";
 import { useState } from "react";
+import { createUser } from "../../services/loginRegister.service";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 
 import { FormElements } from "./loginRegisterTypes";
 import { Props } from "./loginRegisterTypes";
-import { userState } from "./loginRegisterTypes";
+
+export interface RegisterData {
+	firstName: string;
+	lastName: string;
+	email: string;
+	password: string
+	confirmPassword: string
+}
+
+const initialFormState: RegisterData = {
+	firstName: "",
+	lastName: "",
+	email: "",
+	password: "",
+	confirmPassword: ""
+}
+
+interface ValidationErrors {
+	firstNameError: string;
+	lastNameError: string;
+	emailError: string;
+	passwordError: string;
+}
+
+const initialErrorState: ValidationErrors = {
+	firstNameError: "",
+	lastNameError: "",
+	emailError: "",
+	passwordError: ""
+}
 
 export const Register: React.FC<Props> = (props) => {
-	const [userInfo, setUserInfo] = useState<FormElements>(userState);
+	const [userInfo, setUserInfo] = useState<RegisterData>(initialFormState);
+	const [errors, setErrors] = useState<ValidationErrors>(initialErrorState)
+	const navigate: NavigateFunction = useNavigate();
+
 
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		console.log(userInfo);
+		setErrors(initialErrorState);
+		createUser(userInfo)
+			.then(() => {
+				navigate("/dashboard");
+			})
+			.catch((error: any) => {
+				setErrors(error);
+			});
 	};
 
 	const handleChange =
