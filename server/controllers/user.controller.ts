@@ -1,5 +1,3 @@
-export {};
-
 const { createUser, loginUser } = require("../services/user.service");
 
 const handleCreateUser = async (req: any, res: any) => {
@@ -7,7 +5,10 @@ const handleCreateUser = async (req: any, res: any) => {
 		const user = await createUser(req.body, res);
 		return res.json(user);
 	} catch (error: any) {
-		return res.status(400).json(error);
+		console.log(error);
+		res.statusMessage = "Current password does not match";
+		return res.status(400).end();
+		// throw new Error("invalid credentials")
 	}
 };
 

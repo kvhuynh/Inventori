@@ -69,18 +69,11 @@ export class User extends Model {
 				msg: "Password must be between 8 and 50 characters",
 			},
 			hashPassword() {
-				if (this.password === this.confirmPassword) {
-					this.password = bcrypt.hashSync(this.confirmPassword, 10);
-				} else {
-					throw new Error("passwords must match");
-				}
+				this.password = bcrypt.hashSync(this.password, 10);
 			},
 		},
 	})
 	password: string;
-
-	@Column(DataType.VIRTUAL)
-	confirmPassword: string;
 
 	@Column({
 		field: "permissions",

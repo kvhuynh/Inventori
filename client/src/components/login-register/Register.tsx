@@ -13,15 +13,14 @@ import { useState } from "react";
 import { createUser } from "../../services/loginRegister.service";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 
-import { FormElements } from "./loginRegisterTypes";
+// import { FormElements } from "./loginRegisterTypes";
 import { Props } from "./loginRegisterTypes";
 
 export interface RegisterData {
 	firstName: string;
 	lastName: string;
 	email: string;
-	password: string
-	confirmPassword: string
+	password: string;
 }
 
 const initialFormState: RegisterData = {
@@ -29,8 +28,7 @@ const initialFormState: RegisterData = {
 	lastName: "",
 	email: "",
 	password: "",
-	confirmPassword: ""
-}
+};
 
 interface ValidationErrors {
 	firstNameError: string;
@@ -43,29 +41,30 @@ const initialErrorState: ValidationErrors = {
 	firstNameError: "",
 	lastNameError: "",
 	emailError: "",
-	passwordError: ""
-}
+	passwordError: "",
+};
 
 export const Register: React.FC<Props> = (props) => {
 	const [userInfo, setUserInfo] = useState<RegisterData>(initialFormState);
-	const [errors, setErrors] = useState<ValidationErrors>(initialErrorState)
+	const [errors, setErrors] = useState<ValidationErrors>(initialErrorState);
 	const navigate: NavigateFunction = useNavigate();
-
 
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		setErrors(initialErrorState);
 		createUser(userInfo)
 			.then(() => {
-				navigate("/dashboard");
+				// navigate("/dashboard");
 			})
 			.catch((error: any) => {
-				setErrors(error);
+				// setErrors(error);
+				console.log(error.response.statusText);
+				
 			});
 	};
 
 	const handleChange =
-		(props: keyof FormElements) =>
+		(props: keyof RegisterData) =>
 		(event: React.ChangeEvent<HTMLInputElement>) => {
 			setUserInfo({ ...userInfo, [props]: event.target.value });
 		};
@@ -127,6 +126,22 @@ export const Register: React.FC<Props> = (props) => {
 				<Stack gap={4} sx={{ mt: 2 }}>
 					<form onSubmit={handleSubmit}>
 						<FormControl required>
+							<FormLabel>First Name:</FormLabel>
+							<Input
+								onChange={handleChange("firstName")}
+								// type="email"
+								name="firstName"
+							/>
+						</FormControl>{" "}
+						<FormControl required>
+							<FormLabel>Last Name:</FormLabel>
+							<Input
+								onChange={handleChange("lastName")}
+								// type="email"
+								name="lastName"
+							/>
+						</FormControl>
+						<FormControl required>
 							<FormLabel>Email:</FormLabel>
 							<Input
 								onChange={handleChange("email")}
@@ -140,14 +155,6 @@ export const Register: React.FC<Props> = (props) => {
 								onChange={handleChange("password")}
 								type="password"
 								name="password"
-							/>
-						</FormControl>
-						<FormControl required>
-							<FormLabel>Confirm Password:</FormLabel>
-							<Input
-								onChange={handleChange("confirmPassword")}
-								type="password"
-								name="confirmPassword"
 							/>
 						</FormControl>
 						<Stack gap={4} sx={{ mt: 2 }}>

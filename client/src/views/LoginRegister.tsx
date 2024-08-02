@@ -43,7 +43,6 @@ function ColorSchemeToggle(props: IconButtonProps) {
 
 export const LoginRegister: React.FC = () => {
 	const [isFlipped, setIsFlipped] = useState<boolean>(false);
-	// const [userInfo, setUserInfo] = useState<FormElements>(userState);
 
 	const handleFlip = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
 		e.preventDefault();
