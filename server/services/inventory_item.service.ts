@@ -6,8 +6,12 @@ const getAllInventoryItems = async () => {
 	return inventoryItems;
 };
 
+const getOneInventoryItem = async (id: number) => {
+	const inventoryItem = await InventoryItem.findOne();
+	return inventoryItem;
+};
+
 const createInventoryItem = async (data: any) => {
-	// const sessionId = getSessionId(userId);
 	console.log("services: creating inventory item...");
 	const inventoryItem = await InventoryItem.create(data);
 	return inventoryItem;

@@ -24,42 +24,63 @@ export class InventoryItem extends Model {
 	id: number;
 
 	@Column({
+		field: "company",
+		type: DataType.STRING,
+        allowNull: false
+	})
+    company: string
+
+	@Column({
 		field: "name",
 		type: DataType.STRING,
         allowNull: false
 	})
     name: string
 
-    @Column({
-        field: "description",
-        type: DataType.STRING,
-
-    })
+	@Column({
+		field: "description",
+		type: DataType.STRING,
+        allowNull: false
+	})
     description: string
 
-    @Column({
-        field: "unit_size",
-        type: DataType.STRING,
+	@Column({
+		field: "catalog_number",
+		type: DataType.STRING,
+        allowNull: false
+	})
+    catalogNumber: string
 
-    })
-    unitSize: string
 
     @Column({
-        field: "price",
+		field: "quantity",
+		type: DataType.STRING,
+        allowNull: false
+	})
+    quantity: string
+
+    @Column({
+        field: "price_per_unit",
         type: DataType.FLOAT,
         defaultValue: 0.00
     })
-	price: number;
+	pricePerUnit: number;
 
-    @ForeignKey(() => User)
     @Column({
-        field: "user_id",
-        type: DataType.INTEGER,
-        allowNull: false
+        field: "location",
+        type: DataType.STRING
     })
+	location: string;
+
+    // @ForeignKey(() => User)
+    // @Column({
+    //     field: "user_id",
+    //     type: DataType.INTEGER,
+    //     allowNull: false
+    // })
 
 
-    userId: number;
+    // userId: number;
 
     @CreatedAt
 	created_at: Date;
@@ -67,6 +88,6 @@ export class InventoryItem extends Model {
 	@UpdatedAt
 	updated_at: Date;
 
-    @BelongsTo(() => User)
-    user: User;
+    // @BelongsTo(() => User)
+    // user: User;
 }

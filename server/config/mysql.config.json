@@ -1,6 +1,6 @@
 {
     "host": "localhost", 
-    "user": "rootroot",
+    "user": "root",
     "database": "inventori-db",
     "password": "root"
 }                   

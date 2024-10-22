@@ -11,7 +11,7 @@ const port = 8000;
 const sequelize = require("./config/sequelize.config");
 
 app.use(express.json());
-
+app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/inventory-items", inventoryItemRouter);
 app.listen(port, () => {
