@@ -5,24 +5,20 @@ import { InventoryItem } from "../../types/InventoryTypes";
 
 import { Typography, Table, Button } from "@mui/joy";
 
-export const InventoryTable = () => {
+export const AllItems = () => {
 	const [inventoryItems, setInventoryItems] = useState<Array<InventoryItem>>();
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		console.log("fsadfsdfasdfasdf");
-
 		getInventoryItems().then((inventoryItems) => {
-			console.log(inventoryItems);
-
 			setInventoryItems(inventoryItems);
 		});
 	}, []);
 
 	return (
 		<>
-			<Button onClick={() => navigate("/new")}> + Add item</Button>
-			<Table hoverRow={true}>
+			{/* <Button onClick={() => navigate("/new")}> + Add item</Button> */}
+			<Table hoverRow={true} sx={{ mt: 4 }}>
 				<thead>
 					<tr>
 						<th>
@@ -44,12 +40,12 @@ export const InventoryTable = () => {
 				</thead>
 				<tbody>
 					{inventoryItems?.map((item, index) => (
-						<tr key={index} onClick={()=> navigate(`/${item.id}`)}>
+						<tr key={index} onClick={() => navigate(`/${item.id}`)}>
+							<td>{item.company}</td>
 							<td>{item.name}</td>
 							<td>{item.description}</td>
-							<td>{item.description}</td>
-							<td>{item.description}</td>
-							<td>{item.description}</td>
+							<td>{item.pricePerUnit}</td>
+							<td>{item.location}</td>
 						</tr>
 					))}
 				</tbody>
@@ -58,4 +54,4 @@ export const InventoryTable = () => {
 	);
 };
 
-export default InventoryTable;
+export default AllItems;

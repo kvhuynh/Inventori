@@ -7,7 +7,11 @@ const getAllInventoryItems = async () => {
 };
 
 const getOneInventoryItem = async (id: number) => {
-	const inventoryItem = await InventoryItem.findOne();
+	console.log(`id is ${id}`);
+	
+	const inventoryItem = await InventoryItem.findOne({ where: { id: id } });
+	console.log(inventoryItem);
+	
 	return inventoryItem;
 };
 
@@ -19,5 +23,6 @@ const createInventoryItem = async (data: any) => {
 
 module.exports = {
 	getAllInventoryItems,
+	getOneInventoryItem,
 	createInventoryItem,
 };

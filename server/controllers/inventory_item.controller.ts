@@ -2,13 +2,12 @@ export {};
 
 const {
 	getAllInventoryItems,
+	getOneInventoryItem,
 	createInventoryItem,
 } = require("../services/inventory_item.service");
 
 const handleCreateInventoryItem = async (req: any, res: any) => {
 	try {
-		console.log(req.body);
-
 		const inventoryItem = await createInventoryItem(req.body);
 		return res.json(inventoryItem);
 	} catch (error: any) {
@@ -17,20 +16,20 @@ const handleCreateInventoryItem = async (req: any, res: any) => {
 };
 
 const handleGetOneInventoryItem = async (req: any, res: any) => {
-	try {
-
-		const inventoryItem = await createInventoryItem(req.body);
+	try {	
+		const inventoryItem = await getOneInventoryItem((req.params.id));
 		return res.json(inventoryItem);
 	} catch (error: any) {
-		console.log(res.status(400).json(error));
+		// console.log(res.status(400).json(error));
+
 	}
 };
 
 
 const handleGetAllInventoryItems = async (req: any, res: any) => {
 	try {
-		console.log("HERE!");
-
+		console.log("Getting all Inventory Items...");
+		
 		const inventoryItems = await getAllInventoryItems();
         
         
