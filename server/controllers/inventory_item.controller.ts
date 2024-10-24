@@ -8,6 +8,7 @@ const {
 
 const handleCreateInventoryItem = async (req: any, res: any) => {
 	try {
+		
 		const inventoryItem = await createInventoryItem(req.body);
 		return res.json(inventoryItem);
 	} catch (error: any) {
@@ -31,7 +32,7 @@ const handleGetAllInventoryItems = async (req: any, res: any) => {
 		console.log("Getting all Inventory Items...");
 		
 		const inventoryItems = await getAllInventoryItems();
-        
+		
         
 		return res.json(inventoryItems);
 	} catch (error: any) {

@@ -13,5 +13,6 @@ const router = express.Router();
 router.get("/", handleGetAllInventoryItems);
 router.get("/:id", handleGetOneInventoryItem)
 router.post("/new", handleCreateInventoryItem);
+router.post("/tabs")
 
 module.exports = { inventoryItemRouter: router };
